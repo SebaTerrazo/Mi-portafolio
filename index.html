@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portafolio | Sebastián Terrazo</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.png">
+  <script defer src="particles.min.js"></script>
+  <script defer src="scrollreveal.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+<div id="particles-js"></div>
+
+<header id="header">
+  <div class="container">
+    <h1>Sebastián Terrazo</h1>
+    <p>Programador Creativo | Desarrollador Full Stack</p>
+    <nav>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#projects">Proyectos</a>
+      <a href="#skills">Habilidades</a>
+      <a href="#contact">Contacto</a>
+      <button id="toggle-mode">🌙</button>
+    </nav>
+  </div>
+</header>
+
+<section id="sobre-mi" class="container reveal">
+  <h2>Sobre mí</h2>
+  <div class="about-content">
+    <div>
+      <p>Soy estudiante de informática apasionado por la programación, 
+        la creación de videojuegos y el desarrollo de soluciones web innovadoras.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="container reveal">
+  <h2>Proyectos</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <h3>PÁGINA DE ANSES</h3>
+      <p>Trabajo Individual.</p>
+      <a href="https://sebaterrazo.github.io/ANSES/" class="btn" target="_blank">Ver Proyecto</a>
+    </div>
+    <div class="project-card">
+      <h3>EVENTUM</h3>
+      <p>Proyecto Grupal.</p>
+      <a href="https://eventums.github.io/EVENTUM/" class="btn" target="_blank">Ver Proyecto</a>
+    </div>
+    <div class="project-card">
+      <h3>Pagina WEB de Autos</h3>
+      <p>Proyecto Individual.</p>
+      <a href="https://sebaterrazo.github.io/AUTOS/" class="btn" target="_blank">Ver Código</a>
+    </div>
+    
+  </div>
+</section>
+
+<section id="skills" class="container reveal">
+  <h2>Habilidades</h2>
+  <div class="skills-grid">
+    <div class="skill">
+      <h3>Java</h3><div class="bar"><div style="width: 90%"></div></div>
+    </div>
+    <div class="skill">
+      <h3>HTML / CSS</h3><div class="bar"><div style="width: 85%"></div></div>
+    </div>
+    <div class="skill">
+      <h3>JavaScript</h3><div class="bar"><div style="width: 75%"></div></div>
+    </div>
+    <div class="skill">
+      <h3>MySQL</h3><div class="bar"><div style="width: 70%"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="container reveal">
+  <h2>Contacto</h2>
+  <form action="https://formspree.io/f/mnqeezpb" method="POST">
+    <input type="text" name="name" placeholder="Tu nombre" required>
+    <input type="email" name="email" placeholder="Tu email" required>
+    <textarea name="message" placeholder="Tu mensaje" required></textarea>
+    <button type="submit" class="btn">Enviar Mensaje</button>
+  </form>
+</section>
+
+<footer>
+  
+  <p> 2025 Sebastián Terrazo</p>
+</footer>
+
+</body>
+</html>
