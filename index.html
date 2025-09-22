@@ -2,95 +2,853 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portafolio | Sebastián Terrazo</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="favicon.png">
-  <script defer src="particles.min.js"></script>
-  <script defer src="scrollreveal.min.js"></script>
-  <script defer src="app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sebastián Terrazo | Desarrollador Full Stack</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --secondary: #8b5cf6;
+      --accent: #f59e0b;
+      --dark: #0f0f23;
+      --darker: #050510;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --glow: 0 0 50px rgba(99, 102, 241, 0.3);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--darker);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    .background-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: var(--darker);
+      overflow: hidden;
+    }
+
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .shape {
+      position: absolute;
+      background: var(--gradient);
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .shape:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+    .shape:nth-child(2) { width: 120px; height: 120px; right: 10%; animation-delay: -5s; }
+    .shape:nth-child(3) { width: 60px; height: 60px; left: 50%; animation-delay: -10s; }
+    .shape:nth-child(4) { width: 100px; height: 100px; right: 30%; animation-delay: -15s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-100px) rotate(90deg); }
+      50% { transform: translateY(-200px) rotate(180deg); }
+      75% { transform: translateY(-100px) rotate(270deg); }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      background: rgba(15, 15, 35, 0.9);
+      backdrop-filter: blur(20px);
+      border-radius: 50px;
+      padding: 1rem 2rem;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.3)); }
+      to { filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.5)); }
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: var(--gray);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+      box-shadow: var(--glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--light);
+      border: 2px solid var(--primary);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    /* Sections */
+    section {
+      padding: 8rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* About Section */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      margin: 0 auto;
+      position: relative;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+      50% { box-shadow: 0 0 0 30px rgba(99, 102, 241, 0); }
+    }
+
+    .about-text {
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+
+    .about-text p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: rgba(15, 15, 35, 0.5);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--glow);
+    }
+
+    .project-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .project-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--light);
+    }
+
+    .project-card p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-card {
+      background: rgba(15, 15, 35, 0.5);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: scale(1.05);
+      box-shadow: var(--glow);
+    }
+
+    .skill-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .skill-progress {
+      width: 100%;
+      height: 8px;
+      background: rgba(99, 102, 241, 0.2);
+      border-radius: 50px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .skill-progress-bar {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 50px;
+      transition: width 2s ease-in-out;
+    }
+
+    /* Contact Section */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(15, 15, 35, 0.5);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 10px;
+      color: var(--light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--gray);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--dark);
+      border-top: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-block;
+      margin: 0 1rem;
+      font-size: 2rem;
+      color: var(--gray);
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--primary);
+      transform: translateY(-5px);
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(99, 102, 241, 0.2);
+      z-index: 1000;
+    }
+
+    .scroll-progress {
+      height: 100%;
+      background: var(--gradient);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      nav {
+        position: fixed;
+        bottom: 2rem;
+        right: 50%;
+        transform: translateX(50%);
+        top: auto;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 200px;
+      }
+
+      section {
+        padding: 4rem 1rem;
+      }
+    }
+
+    /* Animation Classes */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.6s ease;
+    }
+
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.6s ease;
+    }
+
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Loading Animation */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--darker);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader {
+      width: 80px;
+      height: 80px;
+      border: 4px solid rgba(99, 102, 241, 0.2);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-<div id="particles-js"></div>
-
-<header id="header">
-  <div class="container">
-    <h1>Sebastián Terrazo</h1>
-    <p>Programador Creativo | Desarrollador Full Stack</p>
-    <nav>
-      <a href="#sobre-mi">Sobre mí</a>
-      <a href="#projects">Proyectos</a>
-      <a href="#skills">Habilidades</a>
-      <a href="#contact">Contacto</a>
-      <button id="toggle-mode">🌙</button>
-    </nav>
+  <!-- Loading Screen -->
+  <div class="loading" id="loading">
+    <div class="loader"></div>
   </div>
-</header>
 
-<section id="sobre-mi" class="container reveal">
-  <h2>Sobre mí</h2>
-  <div class="about-content">
-    <div>
-      <p>Soy estudiante de informática apasionado por la programación, 
-        la creación de videojuegos y el desarrollo de soluciones web innovadoras.</p>
+  <!-- Scroll Progress -->
+  <div class="scroll-indicator">
+    <div class="scroll-progress" id="scrollProgress"></div>
+  </div>
+
+  <!-- Animated Background -->
+  <div class="background-animation">
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
     </div>
   </div>
-</section>
 
-<section id="projects" class="container reveal">
-  <h2>Proyectos</h2>
-  <div class="projects-grid">
-    <div class="project-card">
-      <h3>PÁGINA DE ANSES</h3>
-      <p>Trabajo Individual.</p>
-      <a href="https://sebaterrazo.github.io/ANSES/" class="btn" target="_blank">Ver Proyecto</a>
+  <!-- Navigation -->
+  <nav>
+    <a href="#home"><i class="fas fa-home"></i> Inicio</a>
+    <a href="#about"><i class="fas fa-user"></i> Sobre mí</a>
+    <a href="#projects"><i class="fas fa-code"></i> Proyectos</a>
+    <!-- <a href="#skills"><i class="fas fa-tools"></i> Habilidades</a>
+    <a href="#contact"><i class="fas fa-envelope"></i> Contacto</a>-->
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content fade-in">
+      <h1>Sebastián Terrazo</h1>
+      <p>Programador Creativo | Desarrollador </p>
+      <div class="cta-buttons">
+        <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
+        <a href="#contact" class="btn btn-secondary">Contactar</a>
+      </div>
     </div>
-    <div class="project-card">
-      <h3>EVENTUM</h3>
-      <p>Proyecto Grupal.</p>
-      <a href="https://eventums.github.io/EVENTUM/" class="btn" target="_blank">Ver Proyecto</a>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="fade-in">
+    <h2>Sobre mí</h2>
+    <div class="about-grid">
+      <div class="about-image slide-in-left">
+        💻
+      </div>
+      <div class="about-text slide-in-right">
+        <p>Soy un estudiante de informática apasionado por la programación y el desarrollo de soluciones innovadoras. Me especializo en crear experiencias web modernas y aplicaciones que marcan la diferencia.</p>
+        <p>Con conocimientos en desarrollo full stack, me encanta explorar nuevas tecnologías y enfrentar desafíos complejos. Mi objetivo es crear productos digitales que no solo funcionen perfectamente, sino que también brinden experiencias excepcionales a los usuarios.</p>
+        <p>Cuando no estoy programando, me dedico al desarrollo de videojuegos y a explorar las últimas tendencias en tecnología.</p>
+      </div>
     </div>
-    <div class="project-card">
-      <h3>Pagina WEB de Autos</h3>
-      <p>Proyecto Individual.</p>
-      <a href="https://sebaterrazo.github.io/AUTOS/" class="btn" target="_blank">Ver Código</a>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="fade-in">
+    <h2>Proyectos Destacados</h2>
+    <div class="projects-grid">
+      <div class="project-card slide-in-left">
+        <div class="project-icon">
+          <i class="fas fa-university"></i>
+        </div>
+        <h3>Plataforma ANSES</h3>
+        <p>Desarrollo completo de una plataforma web moderna para gestión de trámites gubernamentales con diseño responsivo y UX optimizada.</p>
+        <a href="https://sebaterrazo.github.io/PagANSES/" class="btn btn-primary" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Ver Proyecto
+        </a>
+      </div>
+      
+      <div class="project-card fade-in">
+        <div class="project-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3>EVENTUM</h3>
+        <p>Aplicación colaborativa para gestión de eventos con interfaz intuitiva, sistema de reservas y panel administrativo completo.</p>
+        <a href="https://sebaterrazo.github.io/Eventum2.0/" class="btn btn-primary" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Ver Proyecto
+        </a>
+      </div>
+      
+      <div class="project-card slide-in-right">
+        <div class="project-icon">
+          <i class="fas fa-car"></i>
+        </div>
+        <h3>AutoDealer Pro</h3>
+        <p>Portal web premium para venta de automóviles con catálogo interactivo, filtros avanzados y sistema de comparación.</p>
+        <a href="https://sebaterrazo.github.io/AUTOS/" class="btn btn-primary" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Ver Proyecto
+        </a>
+      </div>
     </div>
+  </section>
+ 
+   <!--Skills Section--> 
+  <section id="skills" class="fade-in">
+    <!-- <h2>Habilidades Técnicas</h2>
+    <div class="skills-grid">
+      <div class="skill-card slide-in-left">
+        <div class="skill-icon">
+          <i class="fab fa-php"></i>
+        </div>
+        <h3>PHP</h3>
+        <p>Desarrollo backend robusto y APIs RESTful</p>
+        <div class="skill-progress">
+          <div class="skill-progress-bar" data-width="75%"></div>
+        </div>
+      </div>-->
+      
+      <!-- <div class="skill-card fade-in">
+        <div class="skill-icon">
+          <i class="fab fa-html5"></i>
+        </div>
+        <h3>HTML5 / CSS3</h3>
+        <p>Interfaces modernas y responsivas</p>
+        <div class="skill-progress">
+          <div class="skill-progress-bar" data-width="90%"></div>
+        </div>
+      </div>-->
+      
+      <!--<div class="skill-card slide-in-right">
+        <div class="skill-icon">
+          <i class="fab fa-js-square"></i>
+        </div>
+        <h3>JavaScript</h3>
+        <p>Aplicaciones interactivas y dinámicas</p>
+        <div class="skill-progress">
+          <div class="skill-progress-bar" data-width="85%"></div>
+        </div>
+      </div>
+      
+      <div class="skill-card fade-in">
+        <div class="skill-icon">
+          <i class="fas fa-database"></i>
+        </div>
+        <h3>MySQL</h3>
+        <p>Gestión de bases de datos eficiente</p>
+        <div class="skill-progress">
+          <div class="skill-progress-bar" data-width="70%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  //Contact Section 
+  <section id="contact" class="fade-in">
+    <h2>Contacto</h2>
+    <div class="contact-form">
+      <form action="https://formspree.io/f/mnqeezpb" method="POST">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Tu nombre completo" required>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Tu email" required>
+        </div>
+        <div class="form-group">
+          <input type="text" name="subject" placeholder="Asunto" required>
+        </div>
+        <div class="form-group">
+          <textarea name="message" rows="5" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i> Enviar Mensaje
+        </button>
+      </form>
+    </div>-->
+  </section>
+
+  <!--Footer--> 
+  <footer>
+    <div class="social-links">
+      <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <!-- <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>-->
+      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>&copy; 2025 Sebastián Terrazo. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Loading Screen
+    window.addEventListener('load', function() {
+      const loading = document.getElementById('loading');
+      loading.classList.add('hidden');
+      setTimeout(() => loading.remove(), 500);
+    });
+
+    // Scroll Progress
+    window.addEventListener('scroll', function() {
+      const scrollProgress = document.getElementById('scrollProgress');
+      const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      scrollProgress.style.width = scrollPercent + '%';
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Animate skill progress bars
+          if (entry.target.querySelector('.skill-progress-bar')) {
+            const bars = entry.target.querySelectorAll('.skill-progress-bar');
+            bars.forEach(bar => {
+              const width = bar.getAttribute('data-width');
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 200);
+            });
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Parallax effect for background shapes
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const shapes = document.querySelectorAll('.shape');
+      shapes.forEach((shape, index) => {
+        const rate = scrolled * -0.5 * (index + 1);
+        shape.style.transform = `translateY(${rate}px)`;
+      });
+    });
+
+    // Add hover effects to project cards
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Form submission handling
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const button = this.querySelector('button[type="submit"]');
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+      button.disabled = true;
+      
+      setTimeout(() => {
+        button.innerHTML = '<i class="fas fa-check"></i> ¡Enviado!';
+        setTimeout(() => {
+          button.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensaje';
+          button.disabled = false;
+        }, 2000);
+      }, 1000);
+    });
+
+    // Dynamic typing effect for hero
+    const heroTitle = document.querySelector('.hero h1');
+    const text = 'Sebastián Terrazo';
+    heroTitle.innerHTML = '';
     
-  </div>
-</section>
+    let i = 0;
+    function typeWriter() {
+      if (i < text.length) {
+        heroTitle.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+      }
+    }
+    
+    setTimeout(typeWriter, 1500);
 
-<section id="skills" class="container reveal">
-  <h2>Habilidades</h2>
-  <div class="skills-grid">
-    <div class="skill">
-      <h3>Java</h3><div class="bar"><div style="width: 90%"></div></div>
-    </div>
-    <div class="skill">
-      <h3>HTML / CSS</h3><div class="bar"><div style="width: 85%"></div></div>
-    </div>
-    <div class="skill">
-      <h3>JavaScript</h3><div class="bar"><div style="width: 75%"></div></div>
-    </div>
-    <div class="skill">
-      <h3>MySQL</h3><div class="bar"><div style="width: 70%"></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="container reveal">
-  <h2>Contacto</h2>
-  <form action="https://formspree.io/f/mnqeezpb" method="POST">
-    <input type="text" name="name" placeholder="Tu nombre" required>
-    <input type="email" name="email" placeholder="Tu email" required>
-    <textarea name="message" placeholder="Tu mensaje" required></textarea>
-    <button type="submit" class="btn">Enviar Mensaje</button>
-  </form>
-</section>
-
-<footer>
-  
-  <p> 2025 Sebastián Terrazo</p>
-</footer>
-
+    // Add floating animation to navigation
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop > lastScrollTop) {
+        nav.style.transform = 'translateY(-100px)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastScrollTop = scrollTop;
+    });
+  </script>
 </body>
 </html>
